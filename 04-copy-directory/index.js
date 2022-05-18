@@ -12,7 +12,7 @@ function CopyFiles() {
   const isFolderExist = (dir) => {
     fs.access(dir, (err) => {
       if (err) {
-        createDir(toDir);
+        copyFiles(fromDir, toDir);
       } else {
         rmDir(toDir);
       }
@@ -25,7 +25,6 @@ function CopyFiles() {
     });
   };
   const copyFiles = (from, to) => {
-    console.log('test');
     createDir(to);
     fs.readdir(from, { withFileTypes: true }, (err, files) => {
       if (err) throw err;
@@ -33,14 +32,11 @@ function CopyFiles() {
         if (file.isFile()) {
           fs.copyFile(path.join(from, file.name), path.join(to, file.name), (err) => { if (err) throw err; });
         } else {
-          fromDir += `/${file.name}`;
-          toDir += `/${file.name}`;
-          copyFiles(fromDir, toDir);
+          copyFiles(path.join(from, file.name), path.join(to, file.name));
         }
       });
     });
   };
-  copyFiles(fromDir, toDir);
   isFolderExist(toDir);
 }
 CopyFiles();
