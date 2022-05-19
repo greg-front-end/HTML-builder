@@ -15,7 +15,7 @@ function BundleHTML() {
       for (let html of htmlComponents) {
         const streamHtmlComponents = createReadStream(path.join(__dirname, 'components', html.name));
         streamHtmlComponents.on('data', (chunk) => {
-          if (htmlTemplate.includes(`{{${html.name.split('.')[0]}}}`)) {
+          while (htmlTemplate.includes(`{{${html.name.split('.')[0]}}}`)) {
             htmlTemplate = htmlTemplate.replace(`{{${html.name.split('.')[0]}}}`, chunk.toString());
             writeFile(path.join(__dirname, 'project-dist', 'index.html'), htmlTemplate, (err) => {
               if (err) throw err;
