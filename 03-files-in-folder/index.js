@@ -9,8 +9,7 @@ const checkFilesSize = () => {
         fs.stat(path.join(__dirname, 'secret-folder', file.name), (err, stats) => {
           if (err) throw err;
           const fileObj = path.parse(path.join(__dirname, file.name));
-          const kb = Math.round(stats.size / 1024);
-          console.log(`${fileObj.name} - ${fileObj.ext.slice(1)} - ${kb}kb`);
+          console.log(`${fileObj.name} - ${fileObj.ext.slice(1)} - ${stats.size}b`);
         });
       }
     });
